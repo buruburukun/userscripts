@@ -32,14 +32,20 @@
         });
     }
 
-    function vocabSearch(event) {
-        const elem = event.currentTarget;
+    function vocabSearch(elem) {
         const text = elem.textContent;
         const dict = document.querySelector("#dict-p");
         dict.querySelector("#dict-p .pure-menu label").click();
         dict.querySelector("#vocab_japanese").value = text;
-        dict.querySelector("button").click();
-        document.querySelector("#dict_label").click();
+        dict.querySelector("#vsearch_sett").click();
+        openDict();
+        dict.querySelector("#vocab_japanese").blur();
+    }
+
+    function delayEvent(func, elem) {
+        return () => {
+            globalThis.setTimeout(() => func(elem), 1);
+        };
     }
 
     function linkToDictionary(selector) {
@@ -50,7 +56,7 @@
                     elem.innerHTML += `<button class="buru_dict_link">${text}</button>`;
                 }
                 for (const elem of document.querySelectorAll(".buru_dict_link")) {
-                    elem.addEventListener("click", vocabSearch);
+                    elem.addEventListener("click", delayEvent(vocabSearch, elem));
                 }
                 func();
             });
