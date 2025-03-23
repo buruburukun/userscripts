@@ -6,6 +6,7 @@
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
 // @grant        none
+// @source       https://raw.githubusercontent.com/buruburukun/userscripts/refs/heads/main/renshuu.js
 // ==/UserScript==
 
 (function() {
