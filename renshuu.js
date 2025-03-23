@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.1
+// @version      0.2
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
