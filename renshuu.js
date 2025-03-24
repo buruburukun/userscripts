@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.2
+// @version      0.3
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -35,11 +35,12 @@
     function vocabSearch(elem) {
         const text = elem.textContent;
         const dict = document.querySelector("#dict-p");
-        dict.querySelector("#dict-p .pure-menu label").click();
-        dict.querySelector("#vocab_japanese").value = text;
-        dict.querySelector("#vsearch_sett").click();
+        dict.querySelector(".pure-menu label").click();
+        const searchBox = dict.querySelector("#vocab_japanese");
+        searchBox.value = text;
+        dict.querySelector("#dict_vocab button.dsearch").click();
         openDict();
-        dict.querySelector("#vocab_japanese").blur();
+        searchBox.blur();
     }
 
     function delayEvent(func, elem) {
