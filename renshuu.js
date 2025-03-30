@@ -33,7 +33,7 @@
     }
 
     function vocabSearch(elem) {
-        const text = elem.textContent;
+        const text = elem.textContent.replaceAll("~", "");
         const dict = document.querySelector("#dict-p");
         dict.querySelector(".pure-menu label").click();
         const searchBox = dict.querySelector("#vocab_japanese");
