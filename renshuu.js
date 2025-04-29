@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.4
+// @version      0.5
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -33,7 +33,7 @@
     }
 
     function vocabSearch(elem) {
-        const text = elem.textContent.replaceAll("~", "");
+        const text = elem.getAttribute("buru_dict").replaceAll("~", "");
         const dict = document.querySelector("#dict-p");
         dict.querySelector(".pure-menu label").click();
         const searchBox = dict.querySelector("#vocab_japanese");
@@ -53,11 +53,16 @@
         const func = () => {
             waitForElms(selector).then(elems => {
                 for (const elem of elems) {
-                    const text = elem.textContent.trim();
-                    elem.innerHTML += `<button class="buru_dict_link">${text}</button>`;
-                }
-                for (const elem of document.querySelectorAll(".buru_dict_link")) {
-                    elem.addEventListener("click", delayEvent(vocabSearch, elem));
+                    for (const node of elem.childNodes) {
+                        if (node.nodeType == Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+                            const link = document.createElement("span");
+                            link.textContent = node.textContent;
+                            link.setAttribute("class", "buru_dict_link");
+                            link.setAttribute("buru_dict", elem.textContent);
+                            link.addEventListener("click", delayEvent(vocabSearch, link));
+                            node.replaceWith(link);
+                        }
+                    }
                 }
                 func();
             });
