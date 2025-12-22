@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.5
+// @version      0.6
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -70,6 +70,6 @@
         func();
     }
 
-    const selector = ".flexterm > .print_term > div > div > div > span:has(input):not(:has(.buru_dict_link))";
+    const selector = "div.print_term > div.flexbox > div.grow > div:not(.term_pitch_box) > span:not(:has(.buru_dict_link))";
     linkToDictionary(selector);
 })();
