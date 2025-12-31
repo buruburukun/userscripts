@@ -32,7 +32,7 @@
     }
 
     function vocabSearch(elem) {
-        const text = elem.getAttribute("buru_dict").replaceAll("~", "");
+        const text = elem.getAttribute("buru_dict").replace(/^~+/, "").replace(/~*\/~*/, "/").replace(/~+$/, "");
         const dict = document.querySelector("#dict-p");
         dict.querySelector(".pure-menu label").click();
         const searchBox = dict.querySelector("#vocab_japanese");
