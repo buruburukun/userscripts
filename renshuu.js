@@ -93,4 +93,10 @@
     }
     const answerSelector = "div.full_term:not(:has(.buru_dict_link)) > div > div > div > div.grow";
     forever(answerSelector, linkAnswerToDictionary);
+
+    function kanjiIndex(elem) {
+        elem.setAttribute("data-klook", "");
+    }
+    const kanjiIndexSelector = "#thelist > div > div.ki_block > span:not([data-klook])";
+    forever(kanjiIndexSelector, kanjiIndex);
 })();
