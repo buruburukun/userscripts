@@ -99,4 +99,21 @@
     }
     const kanjiIndexSelector = "#thelist > div > div.ki_block > span:not([data-klook])";
     forever(kanjiIndexSelector, kanjiIndex);
+
+    function linkUserNoteToDictionary(elem) {
+        const sep = ", ";
+        const elems = [];
+        for (const word of elem.textContent.split(sep)) {
+            const sub = document.createElement("span");
+            sub.textContent = word;
+            elems.push(sub);
+            elems.push(makeIcon(word));
+        }
+        elem.textContent = "";
+        for (const sub of elems) {
+            elem.appendChild(sub);
+        }
+    }
+    const userNoteSelector = "#ureibun_vnsent > strong:not(:has(.buru_dict_link))";
+    forever(userNoteSelector, linkUserNoteToDictionary);
 })();
