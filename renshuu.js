@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.7
+// @version      0.8
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -70,9 +70,13 @@
         let kana = "";
         for (const child of elem.children) {
             if (child.tagName === "RUBY") {
-                if (child.childNodes[0].tagName === "SPAN") {
-                    kanji += child.childNodes[0].textContent;
-                    kana += child.childNodes[1].textContent;
+                const spans = child.querySelectorAll("span");
+                if (spans.length > 0) {
+                    for (const span of spans) {
+                        kanji += span.textContent;
+                    }
+                    const rt = child.querySelector("rt");
+                    kana += rt.textContent;
                 } else {
                     kanji += child.childNodes[0].textContent;
                     kana += child.childNodes[0].textContent;
