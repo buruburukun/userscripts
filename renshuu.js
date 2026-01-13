@@ -60,10 +60,12 @@
             }
         }
         const icon = makeIcon(clean(term));
-        elem.parentElement.append(icon);
+        elem.parentElement.insertBefore(icon, elem.nextSibling);
     }
     const selector = "div.print_term:not(:has(.buru_dict_link)) > div.flexbox > div.grow > div:not(.term_pitch_box) > span";
     forever(selector, linkToDictionary);
+    const missSelector = "#me_miss_bodies:not(:has(.buru_dict_link)) div.flexbox > div.grow > div > span[style='font-size:14pt']";
+    forever(missSelector, linkToDictionary);
 
     function linkAnswerToDictionary(elem) {
         let kanji = "";
