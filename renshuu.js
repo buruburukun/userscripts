@@ -72,7 +72,7 @@
         let kana = "";
         for (const child of elem.children) {
             if (child.tagName === "RUBY") {
-                const spans = child.querySelectorAll("span");
+                const spans = child.querySelectorAll("span[data-klook]");
                 if (spans.length > 0) {
                     for (const span of spans) {
                         kanji += span.textContent;
