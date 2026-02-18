@@ -74,11 +74,14 @@
             if (child.tagName === "RUBY") {
                 const spans = child.querySelectorAll("span[data-klook]");
                 if (spans.length > 0) {
+                    let part = "";
                     for (const span of spans) {
-                        kanji += span.textContent;
+                        part += span.textContent;
                     }
                     const rt = child.querySelector("rt");
-                    kana += rt.textContent;
+                    let furi = rt.textContent.trim();
+                    kanji += part;
+                    kana += furi.length > 0 ? furi : part;
                 } else {
                     kanji += child.childNodes[0].textContent;
                     kana += child.childNodes[0].textContent;
