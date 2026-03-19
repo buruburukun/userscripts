@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.8
+// @version      0.9
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -125,4 +125,16 @@
     }
     const userNoteSelector = "#ureibun_vnsent > strong:not(:has(.buru_dict_link))";
     forever(userNoteSelector, linkUserNoteToDictionary);
+
+    const sheet = new CSSStyleSheet();
+    sheet.insertRule(".buru_hide { display: none; }");
+    document.adoptedStyleSheets.push(sheet);
+    function hideIKnowThis(elem) {
+        elem.classList.add("buru_i_know_this");
+        elem.nextElementSibling.classList.add("buru_hide");
+        elem.addEventListener("click", () => {
+            elem.nextElementSibling.classList.toggle("buru_hide");
+        });
+    }
+    forever("u:not(.buru_i_know_this):has(+ div.tinker_trim)", hideIKnowThis);
 })();
