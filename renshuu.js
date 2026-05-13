@@ -137,4 +137,17 @@
         });
     }
     forever("u:not(.buru_i_know_this):has(+ div.tinker_trim)", hideIKnowThis);
+
+    function japaneseDef(elem) {
+        elem.classList.add("buru_def");
+        const parts = elem.innerHTML.split(" ");
+        const list = document.createElement("ol");
+        elem.replaceChildren(list);
+        for (const part of parts) {
+            const li = document.createElement("li");
+            li.textContent = part;
+            list.appendChild(li);
+        }
+    }
+    forever("#dict_kanji #stext_kanji div:has(div.tlnk):not(:has(div.mnemonic_box)) > div.rhidden:not(.buru_def)", japaneseDef);
 })();
