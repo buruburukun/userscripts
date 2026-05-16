@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.10
+// @version      0.11
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -138,6 +138,36 @@
     }
     forever("u:not(.buru_i_know_this):has(+ div.tinker_trim)", hideIKnowThis);
 
+    function isKanji(c) {
+        const codepoint = c.codePointAt(0);
+        return (0x4e00 <= codepoint && codepoint <= 0x9faf) ||
+            (0x3400 <= codepoint && codepoint <= 0x4dbf);
+    }
+
+    function makeClickable(s) {
+        const result = [];
+        let cur = "";
+        for (const c of s) {
+            if (isKanji(c)) {
+                if (cur.length > 0) {
+                    result.push(document.createTextNode(cur));
+                    cur = "";
+                }
+                const k = document.createElement("span");
+                k.setAttribute("data-klook", "");
+                k.textContent = c;
+                result.push(k);
+            } else {
+                cur += c;
+            }
+        }
+        if (cur.length > 0) {
+            result.push(document.createTextNode(cur));
+            cur = "";
+        }
+        return result;
+    }
+
     function japaneseDef(elem) {
         elem.classList.add("buru_def");
         const parts = elem.innerHTML.split(" ");
@@ -145,7 +175,7 @@
         elem.replaceChildren(list);
         for (const part of parts) {
             const li = document.createElement("li");
-            li.textContent = part;
+            li.replaceChildren(...makeClickable(part));
             list.appendChild(li);
         }
     }
