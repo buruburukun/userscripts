@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         renshuu dictionary button
 // @namespace    https://github.com/buruburukun
-// @version      0.11
+// @version      0.12
 // @description  open dictionary when learning on renshuu
 // @author       buruburukun
 // @match        https://*.renshuu.org/*
@@ -72,20 +72,18 @@
         let kana = "";
         for (const child of elem.children) {
             if (child.tagName === "RUBY") {
-                const spans = child.querySelectorAll("span[data-klook]");
-                if (spans.length > 0) {
-                    let part = "";
-                    for (const span of spans) {
-                        part += span.textContent;
+                let part = "";
+                for (const node of child.childNodes) {
+                    if (node.nodeName === "#text") {
+                        part += node.textContent;
+                    } else if (node.nodeName === "SPAN") {
+                        part += node.textContent;
                     }
-                    const rt = child.querySelector("rt");
-                    let furi = rt.textContent.trim();
-                    kanji += part;
-                    kana += furi.length > 0 ? furi : part;
-                } else {
-                    kanji += child.childNodes[0].textContent;
-                    kana += child.childNodes[0].textContent;
                 }
+                const rt = child.querySelector("rt");
+                let furi = rt.textContent.trim();
+                kanji += part;
+                kana += furi.length > 0 ? furi : part;
             }
         }
         const searchTerm = clean(`${kanji}/${kana}`);
